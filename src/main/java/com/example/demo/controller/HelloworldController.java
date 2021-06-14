@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.bean.User;
@@ -22,22 +23,22 @@ public class HelloworldController {
     @Autowired
     User user = new User();
 
-    @ResponseBody
     @RequestMapping("/h")//necessary json-map返回map
-    public Map hello(String req)
+    public String hello(String req, Model model)
     {
         Map<String, Object> map = new HashMap<>();
         System.out.println(req);
-        char t = req.charAt(0);
-        if(req != null && t == 'I')
+        model.addAttribute("msg", "thymeleaf here");
+        if(req != null)
         {
-            map.put("code", 200);
+            char t = req.charAt(0);
+            if(t == 'I')    map.put("code", 200);
         }
         else
         {
             map.put("code", -1);
         }
-        return map;
+        return "/helloworld";
     }
 
 }
